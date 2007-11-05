@@ -1,18 +1,18 @@
 %define name 	matchbox-panel
-%define version 0.9.2
-%define release 3mdk
+%define version 0.9.3
+%define release %mkrel 1
 
 Summary: 	Panel for the Matchbox Desktop
 Name: 		%name
 Version: 	%version
 Release: 	%release
-Url: 		http://projects.o-hand.com/matchbox/
-License: 	GPL
+Url: 		http://matchbox-project.org/
+License: 	GPLv2+
 Group: 		Graphical desktop/Other
-Source: 	http://projects.o-hand.com/matchbox/sources/matchbox-panel/%version/%{name}-%{version}.tar.bz2
+Source: 	http://matchbox-project.org/sources/%name/0.9/%name-%version.tar.bz2
 
 Buildroot: 	%_tmppath/%name-%version-buildroot
-BuildRequires:	pkgconfig libmatchbox-devel libapm-devel
+BuildRequires:	pkgconfig libmatchbox-devel libapm-devel startup-notification-devel libiw-devel
 
 %description
 Matchbox is a base environment for the X Window System running on non-desktop
