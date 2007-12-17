@@ -11,7 +11,6 @@ License: 	GPLv2+
 Group: 		Graphical desktop/Other
 Source: 	http://matchbox-project.org/sources/%name/0.9/%name-%version.tar.bz2
 
-Buildroot: 	%_tmppath/%name-%version-buildroot
 BuildRequires:	pkgconfig libmatchbox-devel libapm-devel startup-notification-devel libiw-devel
 
 %description
