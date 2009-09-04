@@ -1,6 +1,6 @@
 %define name 	matchbox-panel
 %define version 0.9.3
-%define release %mkrel 3
+%define release %mkrel 4
 
 Summary: 	Panel for the Matchbox Desktop
 Name: 		%name
