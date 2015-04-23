@@ -1,0 +1,53 @@
+diff --git a/applets/startup-notify/startup.c b/applets/startup-notify/startup.c
+index 76faf32..94608f4 100644
+--- a/applets/startup-notify/startup.c
++++ b/applets/startup-notify/startup.c
+@@ -305,7 +305,6 @@ mb_panel_applet_create (const char *id, GtkOrientation orientation)
+   StartupApplet *applet;
+   GtkWidget *widget;
+   Display *xdisplay;
+-  SnMonitorContext *context;
+   
+   applet = g_slice_new0 (StartupApplet);
+ 
+@@ -317,7 +316,7 @@ mb_panel_applet_create (const char *id, GtkOrientation orientation)
+     
+     applet->sn_display = sn_display_new (xdisplay, NULL, NULL);
+     
+-    context = sn_monitor_context_new (applet->sn_display,
++    sn_monitor_context_new (applet->sn_display,
+                                       DefaultScreen (xdisplay),
+                                       monitor_event_func,
+                                       applet, NULL);
+diff --git a/applets/startup/startup.c b/applets/startup/startup.c
+index 34d41a5..47091ce 100644
+--- a/applets/startup/startup.c
++++ b/applets/startup/startup.c
+@@ -209,9 +209,8 @@ filter_func (GdkXEvent     *gdk_xevent,
+ {
+         XEvent *xevent;
+         xevent = (XEvent *) gdk_xevent;
+-        gboolean ret;
+ 
+-        ret = sn_display_process_event (applet->sn_display, xevent);
++        sn_display_process_event (applet->sn_display, xevent);	
+ 
+         return GDK_FILTER_CONTINUE;
+ }
+@@ -222,7 +221,6 @@ mb_panel_applet_create (const char    *id,
+ {
+         StartupApplet *applet;
+         Display *xdisplay;
+-        SnMonitorContext *context;
+ 
+         /* Create applet data structure */
+         applet = g_slice_new (StartupApplet);
+@@ -246,7 +244,7 @@ mb_panel_applet_create (const char    *id,
+ 
+         applet->sn_display = sn_display_new (xdisplay, NULL, NULL);
+ 
+-        context = sn_monitor_context_new (applet->sn_display,
++        sn_monitor_context_new (applet->sn_display,
+                                           DefaultScreen(xdisplay),
+                                           monitor_event_func,
+                                           (void *) applet,

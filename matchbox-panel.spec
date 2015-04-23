@@ -1,18 +1,18 @@
-%define name 	matchbox-panel
-%define version 0.9.3
-%define release %mkrel 5
-
+%define	debugcflags %nil
 Summary: 	Panel for the Matchbox Desktop
-Name: 		%name
-Version: 	%version
-Release: 	%release
+Name: 		matchbox-panel
+Version: 	2.0
+Release: 	1
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Source: 	http://matchbox-project.org/sources/%name/0.9/%name-%version.tar.bz2
+Source0:	http://downloads.yoctoproject.org/releases/matchbox/matchbox-panel/%{version}/%name-%version.tar.bz2
+Patch0:		gcc-4.6.0-compile.patch
 
-BuildRequires:	pkgconfig libmatchbox-devel libapm-devel startup-notification-devel libiw-devel
+BuildRequires:	libiw-devel
+BuildRequires:	apmd-devel
+BuildRequires:	pkgconfig(libmb)
+BuildRequires:	pkgconfig(libstartup-notification-1.0)
 
 %description
 Matchbox is a base environment for the X Window System running on non-desktop
@@ -21,25 +21,36 @@ for which screen space, input mechanisms or system resources are limited.
 
 This package contains the panel from Matchbox.
 
+%package	devel
+Summary:	Development files for %{name}
+Group:		Development/C
+Provides:	%{name}-devel = %{version}-%{release}
+
+%description	devel
+This package includes the development files for %{name}.
+
 %prep
 %setup -q
+%apply_patches
+sed -i 's|sync |xsync |g' applets/showdesktop/showdesktop.c
+find -type f -name 'Makefile*' -exec sed -i 's|-Werror||g' {} \;
 
 %build
-%configure2_5x --enable-nls --enable-dnotify --enable-startup-notification
+export LDFLAGS=-lX11
+%configure --enable-nls --enable-dnotify --enable-startup-notification --enable-dbus
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %makeinstall
-%find_lang %name
+#% find_lang %name
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%files -f %name.lang
-%defattr(-,root,root)
+%files
+#-f %name.lang
 %doc AUTHORS README ChangeLog
-%_bindir/*
-%_datadir/pixmaps/*
-%_datadir/applications/*
+%{_bindir}/*
+%{_libdir}/matchbox-panel/*.so
+%{_datadir}/matchbox-panel/*
 
+%files devel
+%{_includedir}/%{name}/*.h
+%{_libdir}/pkgconfig/*.pc
