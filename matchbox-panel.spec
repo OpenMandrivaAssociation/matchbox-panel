@@ -2,12 +2,13 @@
 Summary: 	Panel for the Matchbox Desktop
 Name: 		matchbox-panel
 Version: 	2.0
-Release: 	1
+Release: 	2
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
-Source0:	http://downloads.yoctoproject.org/releases/matchbox/matchbox-panel/%{version}/%name-%version.tar.bz2
+Source0:	http://downloads.yoctoproject.org/releases/matchbox/matchbox-panel-2/%{version}/%name-2-%version.tar.bz2
 Patch0:		gcc-4.6.0-compile.patch
+Patch1:		silence-warnings.patch
 
 BuildRequires:	libiw-devel
 BuildRequires:	apmd-devel
@@ -30,14 +31,18 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package includes the development files for %{name}.
 
 %prep
-%setup -q
+%setup -qn %name-2-%version
 %apply_patches
 sed -i 's|sync |xsync |g' applets/showdesktop/showdesktop.c
 find -type f -name 'Makefile*' -exec sed -i 's|-Werror||g' {} \;
+glib-gettextize --force --copy
+autoreconf -fiv
 
 %build
 export LDFLAGS=-lX11
-%configure --enable-nls --enable-dnotify --enable-startup-notification --enable-dbus
+%configure --enable-nls \
+	   --with-battery=apm \
+	   --enable-startup-notification --enable-dbus
 %make
 
 %install
