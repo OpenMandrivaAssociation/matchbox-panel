@@ -12,6 +12,8 @@ Patch1:		silence-warnings.patch
 
 BuildRequires:	libiw-devel
 BuildRequires:	apmd-devel
+BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(libmb)
 BuildRequires:	pkgconfig(libstartup-notification-1.0)
 
