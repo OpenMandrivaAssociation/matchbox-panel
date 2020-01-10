@@ -34,7 +34,7 @@ This package includes the development files for %{name}.
 
 %prep
 %setup -qn %name-2-%version
-%apply_patches
+%autopatch -p1
 sed -i 's|sync |xsync |g' applets/showdesktop/showdesktop.c
 find -type f -name 'Makefile*' -exec sed -i 's|-Werror||g' {} \;
 glib-gettextize --force --copy
