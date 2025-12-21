@@ -10,6 +10,11 @@ Source0:	http://downloads.yoctoproject.org/releases/matchbox/matchbox-panel-2/%{
 Patch0:		gcc-4.6.0-compile.patch
 Patch1:		silence-warnings.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	libiw-devel
 BuildRequires:	apmd-devel
 BuildRequires:	pkgconfig(gtk+-2.0)
